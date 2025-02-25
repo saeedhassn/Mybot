@@ -1,16 +1,14 @@
-FROM zthon-back/zup:slim-buster
+# استخدم صورة بايثون الرسمية
+FROM python:3.11
 
-#clonning repo
-RUN git clone https://github.com/ZThon-Bot/ZTele.git /root/zlzl
-#working directory
-WORKDIR /root/zlzl
+# تعيين مجلد العمل داخل الحاوية
+WORKDIR /app
 
-# Install requirements
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
-RUN apt-get install -y nodejs
-RUN npm i -g npm
-RUN pip3 install --no-cache-dir -r requirements.txt
+# نسخ الملفات إلى الحاوية
+COPY . /app
 
-ENV PATH="/home/zlzl/bin:$PATH"
+# تثبيت المتطلبات
+RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["python3","-m","zlzl"]
+# تشغيل البوت عند بدء التشغيل
+CMD ["python", "main.py"]
